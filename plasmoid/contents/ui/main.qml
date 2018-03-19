@@ -34,7 +34,7 @@ Item {
 
     property int plasmoidWidth : 150
     property int plasmoidHeight : 170
-    
+
     property int    stationId
     property string station
     property string temperature
@@ -54,6 +54,7 @@ Item {
     property string key_humidity    : "Влажност"
     property string key_description : "Опис времена"
     property string key_code        : "Шифра описа времена"
+
 
     function parse_description(description) {
 
@@ -100,13 +101,27 @@ Item {
         onStatusChanged: {
             var pre = "XmlListModel."
             if (status === XmlListModel.Ready)   {
+                if (!reloadTimerId.running) {
+                    reloadTimerId.start()
+                }
+
                 parse_description(get(0).description)
-                station = get(0).title.split(': ')[1]
+                station = get(0).title.split(': ')[1] // get just station name
                 print(pre +"Ready -count:", count)
             }
             if (status === XmlListModel.Loading) print(pre+"Loading...");
             if (status === XmlListModel.Error)   print(pre+"Error: ", errorString() );
             if (status === XmlListModel.Null)    prin (pre+"Null");
+        }
+    }
+
+    Timer {
+        id: reloadTimerId
+        interval: 1000/*ms*/ * 60/*s*/ * 10/*m*/
+        repeat: true
+        onTriggered: {
+            hidmetRssFeedId.reload()
+            console.log("reloaded...")
         }
     }
 
