@@ -1,0 +1,21 @@
+[Desktop Entry]
+Encoding=UTF-8
+Name=Hidmet
+Comment=Hidmet aktuelni podaci
+Icon=weather-clouds
+Type=Service
+
+X-KDE-ParentApp=
+X-KDE-PluginInfo-Author=Nenad Žikić
+X-KDE-PluginInfo-Email=nenad.zikic@gmail.com
+X-KDE-PluginInfo-Name=org.kde.hidmet
+X-KDE-PluginInfo-Version=1.0
+X-KDE-PluginInfo-License=GPL-3.0
+X-KDE-PluginInfo-Website=https://github.com/nzikic/hidmet-kde-plasmoid
+X-KDE-PluginInfo-Category=Environment and Weather
+
+X-KDE-ServiceTypes=Plasma/Applet
+
+X-Plasma-API=declarativeappletscript
+X-Plasma-MainScript=ui/main.qml
+X-Plasma-RemoteLocation=
