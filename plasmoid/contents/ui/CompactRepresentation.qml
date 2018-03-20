@@ -37,7 +37,6 @@ ColumnLayout {
 
                     Image { source: weather_img_png; /*Layout.alignment: Qt.AlignLeft*/ }
                     PlasmaComponents.Label { text: temperature; font { pointSize: 22 } /*Layout.alignment: Qt.AlignRight*/ }
-                    //Text { text: "duzina je bitna!" }
                 }
 
                 PlasmaComponents.Label { text: weather_desc; }

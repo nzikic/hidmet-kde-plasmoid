@@ -7,30 +7,12 @@ import QtQuick.XmlListModel 2.0
 import org.kde.plasma.core 2.0 as PlasmaCore
 import org.kde.plasma.plasmoid 2.0
 import org.kde.plasma.components 2.0 as PlasmaComponents
-//import org.kde.plasma.private.weather 1.0
 
-
-// Item - the most basic plasmoid component, an empty container.
-/*Item {
-
-    // IconItem - a simple item to display an icon
-    PlasmaCore.IconItem {
-
-        // source - the icon to be displayed
-        source: "face-kiss"
-//        source: Url { text: "http://www.hidmet.gov.rs/repository/ikonice/osmotreni/22.gif" }
-
-        // height & width set to equal the size of the parent item (the empty "Item" above)
-        width: parent.width
-        height: parent.width
-    }
-}
-*/
 
 Item {
     id: rootId
-    width: plasmoidWidth//fullrepresentationId.implicitWidth
-    height: plasmoidHeight//fullrepresentationId.implicitHeight
+    width: plasmoidWidth
+    height: plasmoidHeight
 
     property int plasmoidWidth : 150
     property int plasmoidHeight : 170
@@ -55,6 +37,7 @@ Item {
     property string key_description : "Опис времена"
     property string key_code        : "Шифра описа времена"
 
+    property int refresh_interval_minutes: 10
 
     function parse_description(description) {
 
@@ -91,10 +74,11 @@ Item {
 
     XmlListModel {
         id: hidmetRssFeedId
-        //source: "qrc:///sources/hidmet.xml"
+
         source: "http://www.hidmet.gov.rs/ciril/osmotreni/index.rss"
         //query: "/rss/channel/item[title[text()='Станица: Београд']]"
         query: "/rss/channel/item[title[substring-after(text(), ': ') = 'Београд']]"
+
         XmlRole { name: "title";        query: "title/string()" }
         XmlRole { name: "description";  query: "description/string()" }
 
@@ -117,7 +101,7 @@ Item {
 
     Timer {
         id: reloadTimerId
-        interval: 1000/*ms*/ * 60/*s*/ * 10/*m*/
+        interval: 1000/*ms*/ * 60/*s*/ * refresh_interval_minutes
         repeat: true
         onTriggered: {
             hidmetRssFeedId.reload()
@@ -127,7 +111,6 @@ Item {
 
     Plasmoid.fullRepresentation: FullRepresentation {}
     Plasmoid.compactRepresentation: CompactRepresentation {}
-
 
     Plasmoid.preferredRepresentation: Plasmoid.fullRepresentation
 }

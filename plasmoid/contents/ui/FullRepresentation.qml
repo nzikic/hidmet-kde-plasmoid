@@ -38,14 +38,12 @@ ColumnLayout {
 
                     Image { source: weather_img_png; /*Layout.alignment: Qt.AlignLeft*/ }
                     PlasmaComponents.Label { text: temperature; font { pointSize: 22 } /*Layout.alignment: Qt.AlignRight*/ }
-                    //Text { text: "duzina je bitna!" }
                 }
 
                 PlasmaComponents.Label { text: weather_desc; }
                 PlasmaComponents.Label { text: "<b>" + qsTr("Притисак: ") + "</b>" + preassure }
                 PlasmaComponents.Label { text: "<b>" + qsTr("Брзина ветра: ") + "</b>" + wind_speed }
                 PlasmaComponents.Label { text: "<b>" + qsTr("Смер ветра: ") + "</b>" + wind_direction }
-                PlasmaComponents.Label { text: TemperatureUnitListModel.listIndexForUnitId(0)}
             }
 
             Rectangle {
