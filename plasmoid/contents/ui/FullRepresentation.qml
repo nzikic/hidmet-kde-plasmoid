@@ -1,3 +1,22 @@
+/**
+ *  Copyright 2018  Nenad Žikić <nenad.zikic@gmail.com>
+ *
+ *  This file is part of hidmet-kde-plasmoid.
+ *
+ *  hidmet-kde-plasmoid is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation, either version 3 of the License, or
+ *  (at your option) any later version.
+ *
+ *  hidmet-kde-plasmoid is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with hidmet-kde-plasmoid.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
 import QtQuick 2.0
 import QtQuick.Controls 2.2
 import QtQuick.Layouts 1.3
@@ -6,56 +25,142 @@ import QtQuick.XmlListModel 2.0
 import org.kde.plasma.components 2.0 as PlasmaComponents
 import org.kde.plasma.private.weather 1.0
 
-ColumnLayout {
+Column {
     id: fullrepresentationId
+
+    Layout.minimumWidth: units.gridUnit * 9
+    Layout.minimumHeight: units.gridUnit * 11
+    Layout.preferredWidth: units.gridUnit * 12
+    Layout.preferredHeight: units.gridUnit * 12
+
+    spacing: 5
 
     ListView {
         id: hidmetListViewId
-//            anchors.fill: parent
         model: hidmetRssFeedId
         clip: false
+        //anchors.fill: fullrepresentationId
+        anchors {
+            top: fullrepresentationId.top
+//            horizontalCenter: parent.horizontalCenter
+        }
+
+//        anchors.centerIn: parent
 
         delegate: Item {
             id: itemId
             height: columnId.implicitHeight
-            width:  columnId.implicitWidth
+            width: fullrepresentationId.width
 
             ColumnLayout {
                 id: columnId
-                //width: 400
                 spacing: 5
                 anchors.fill: parent
-                width: rowid.implicitWidth
 
-                PlasmaComponents.Label { text: station; font { pointSize: 14; bold: true } clip:true}
+                // Station label
+                PlasmaComponents.Label { text: station; font { pointSize: 14; bold: true } Layout.alignment: Qt.AlignHCenter }
 
                 RowLayout {
                     id: rowid
-                    //width: parent.width
-                    //Layout.fillWidth: true
-                    Layout.preferredWidth: rootId.plasmoidWidth
-//                    spacing: 25
 
-                    Image { source: weather_img_png; /*Layout.alignment: Qt.AlignLeft*/ }
-                    PlasmaComponents.Label { text: temperature; font { pointSize: 22 } /*Layout.alignment: Qt.AlignRight*/ }
+                    Layout.fillWidth: true
+                    Layout.minimumWidth: parent.width
+                    Layout.preferredWidth: parent.width
+
+                    Image { source: weather_img_png; Layout.alignment: Qt.AlignRight }
+                    PlasmaComponents.Label { text: temperature; font { pointSize: 22 } Layout.alignment: Qt.AlignLeft }
                 }
 
-                PlasmaComponents.Label { text: weather_desc; }
-                PlasmaComponents.Label { text: "<b>" + qsTr("Притисак: ") + "</b>" + preassure }
-                PlasmaComponents.Label { text: "<b>" + qsTr("Брзина ветра: ") + "</b>" + wind_speed }
-                PlasmaComponents.Label { text: "<b>" + qsTr("Смер ветра: ") + "</b>" + wind_direction }
+                // Weather description
+                PlasmaComponents.Label { text: weather_desc; Layout.alignment: Qt.AlignHCenter }
+
+                // Details
+                GridLayout {
+                    columns: 2
+                    visible: rootId.isExpanded
+
+                    PlasmaComponents.Label {
+                        text: qsTr("Притисак: ")
+                        font.weight: Font.Bold
+                        //font.pointSize: 8
+                        Layout.row: 0; Layout.column: 0
+                        Layout.alignment: Qt.AlignRight
+                    }
+
+                    PlasmaComponents.Label {
+                        text: preassure
+                        //font.pointSize: 8
+                        Layout.row: 0
+                        Layout.column: 1
+                        Layout.alignment: Qt.AlignLeft
+                    }
+
+                    PlasmaComponents.Label {
+                        text: qsTr("Брзина ветра: ")
+                        font.weight: Font.Bold
+                        //font.pointSize: 8
+                        Layout.row: 1; Layout.column: 0
+                        Layout.alignment: Qt.AlignRight
+                    }
+
+                    PlasmaComponents.Label {
+                        text: wind_speed
+                        //font.pointSize: 8
+                        Layout.row: 1; Layout.column: 1
+                        Layout.alignment: Qt.AlignLeft
+                    }
+
+                    PlasmaComponents.Label {
+                        text: qsTr("Смер ветра: ");
+                        font.weight: Font.Bold;
+                        //font.pointSize: 8
+                        Layout.row: 2; Layout.column: 0;
+                        Layout.alignment: Qt.AlignRight
+                    }
+
+                    PlasmaComponents.Label {
+                        text: wind_direction
+                        //font.pointSize: 8
+                        Layout.row: 2
+                        Layout.column: 1
+                        Layout.alignment: Qt.AlignLeft
+                    }
+                }
             }
 
-            Rectangle {
-                anchors.fill: parent
-                color: "violet"
-                opacity: 0
-            }
+//            Rectangle {
+//                anchors.fill: parent
+//                color: "violet"
+//                visible: true
+//                opacity: .5
+//            }
 
             MouseArea {
                 anchors.fill: parent
                 onClicked: console.log("clicked")
             }
         }
+    }
+
+    PlasmaComponents.Label {
+        id: externalLinkId;
+        readonly property url hidmet_link: "http://hidmet.gov.rs";
+
+        text: "<a href=\"" + hidmet_link + "\">" + hidmet_link + "</a>"
+        linkColor: color
+        opacity: .5
+
+        font.styleName: Font.underline;
+        font.pointSize: theme.smallestFont.pointSize
+
+        horizontalAlignment: Text.AlignRight
+
+        anchors {
+            bottom: parent.bottom
+            right: parent.right
+            left: parent.left
+        }
+
+        onLinkActivated: Qt.openUrlExternally(link)
     }
 }

@@ -1,3 +1,6 @@
+# QML objects
+*.qmlc
+
 # C++ objects and libs
 
 *.slo
