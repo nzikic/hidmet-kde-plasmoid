@@ -17,63 +17,55 @@
  *  along with hidmet-kde-plasmoid.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import QtQuick 2.0
-import QtQuick.Controls 2.2
-import QtQuick.Layouts 1.3
-import QtQuick.XmlListModel 2.0
+import QtQuick 2.7
+import QtQuick.Layouts 1.0
 
+import org.kde.plasma.core 2.0 as PlasmaCore
+import org.kde.plasma.plasmoid 2.0
 import org.kde.plasma.components 2.0 as PlasmaComponents
 
+
 ColumnLayout {
-    id: fullrepresentationId
+    id: compactrepresentationId
 
-    ListView {
-        id: hidmetListViewId
-//            anchors.fill: parent
-        model: hidmetRssFeedId
-        clip: false
+    function createSubText(description, temperature) {
+        var hasDesc = description !== undefined
+        var hasTemp = temperature !== undefined
 
-        delegate: Item {
-            id: itemId
-            height: columnId.implicitHeight
-            width:  columnId.implicitWidth
-
-            ColumnLayout {
-                id: columnId
-                //width: 400
-                spacing: 5
-                anchors.fill: parent
-                width: rowid.implicitWidth
-
-                PlasmaComponents.Label { text: station; font { pointSize: 14; bold: true } clip:true}
-
-                RowLayout {
-                    id: rowid
-                    //width: parent.width
-                    //Layout.fillWidth: true
-                    Layout.preferredWidth: rootId.plasmoidWidth
-//                    spacing: 25
-
-                    Image { source: weather_img_png; /*Layout.alignment: Qt.AlignLeft*/ }
-                    PlasmaComponents.Label { text: temperature; font { pointSize: 22 } /*Layout.alignment: Qt.AlignRight*/ }
-                }
-
-                PlasmaComponents.Label { text: weather_desc; }
-                PlasmaComponents.Label { text: "<b>" + qsTr("Притисак: ") + "</b>" + preassure }
-                PlasmaComponents.Label { text: "<b>" + qsTr("Брзина ветра: ") + "</b>" + wind_speed }
-                PlasmaComponents.Label { text: "<b>" + qsTr("Смер ветра: ") + "</b>" + wind_direction }
-            }
-
-            Rectangle {
-                anchors.fill: parent
-                color: "violet"
-                opacity: .5
-            }
-
-            MouseArea {
-                anchors.fill: parent
-                onClicked: console.log("clicked")
-            }
+        if (!hasDesc && !hasTemp) {
+            return "Подаци се учитавају..."
+        }
+        else {
+            return (hasDesc ? description : "") + "   " + (hasTemp ? temperature : "")
         }
     }
+
+    Loader {
+        sourceComponent: iconCmpId
+
+        Layout.fillWidth: compactrepresentationId.height > compactrepresentationId.width
+        Layout.fillHeight: compactrepresentationId.width > compactrepresentationId.height
+        Layout.minimumWidth: item.Layout.minimumWidth
+        Layout.minimumHeight: item.Layout.minimumHeight
+    }
+
+    Component {
+        id: iconCmpId
+
+        PlasmaCore.IconItem {
+            id: icon_item_id
+            property int minimalIconSize: Math.max(Math.min(compactrepresentationId.width, compactrepresentationId.height),
+                                                   units.iconSizes.small)
+            source: Qt.resolvedUrl(rootId.weather_img_png)
+
+            implicitWidth: units.iconSizes.small
+            implicitHeight: units.iconSizes.small
+            Layout.minimumWidth: minimalIconSize
+            Layout.minimumHeight: minimalIconSize
+        }
+    }
+
+    Plasmoid.icon           : Qt.resolvedUrl(rootId.weather_img_png)
+    Plasmoid.toolTipMainText: rootId.queryStation
+    Plasmoid.toolTipSubText : createSubText(rootId.weather_desc, rootId.temperature)
 }

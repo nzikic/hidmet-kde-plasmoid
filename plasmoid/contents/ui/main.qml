@@ -40,8 +40,9 @@ Item {
     property string wind_speed
     property string weather_desc
     property string code            : "0"
-    property string weather_img_png : "http://www.hidmet.gov.rs/repository/ikonice/osmotreni/" + code + ".png"
-    property string weather_img_gif : "http://www.hidmet.gov.rs/repository/ikonice/osmotreni/" + code + ".gif"
+    // icons downloaded from - http://www.hidmet.gov.rs/repository/ikonice/osmotreni/
+    property string weather_img_png : "../icons/" + code + ".png"
+    property string weather_img_gif : "../icons/" + code + ".gif"
 
     // keys
     property string key_temperature : "Температура"
@@ -59,7 +60,7 @@ Item {
     property bool   isExpanded: true
 
     onQueryStationChanged: {
-        console.log("------> station query changed | reloading rss feed,and resetting timer...")
+        console.log("------> station query changed "+ queryStation +" | reloading rss feed,and resetting timer...")
         reloadTimerId.restart()
     }
 
@@ -141,6 +142,4 @@ Item {
 
     Plasmoid.fullRepresentation: FullRepresentation {}
     Plasmoid.compactRepresentation: CompactRepresentation {}
-
-    Plasmoid.preferredRepresentation: Plasmoid.fullRepresentation
 }
