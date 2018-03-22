@@ -1,5 +1,6 @@
 # QML objects
 *.qmlc
+*.jsc
 
 # C++ objects and libs
 
