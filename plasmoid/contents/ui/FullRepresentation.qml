@@ -150,7 +150,7 @@ Column {
         linkColor: color
         opacity: .5
 
-        font.styleName: Font.underline;
+        font.underline: true
         font.pointSize: theme.smallestFont.pointSize
 
         horizontalAlignment: Text.AlignRight
