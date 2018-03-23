@@ -30,8 +30,8 @@ Column {
 
     Layout.minimumWidth: units.gridUnit * 9
     Layout.minimumHeight: units.gridUnit * 11
-    Layout.preferredWidth: units.gridUnit * 12
-    Layout.preferredHeight: units.gridUnit * 12
+    Layout.preferredWidth: units.gridUnit * 9
+    Layout.preferredHeight: units.gridUnit * 11
 
     spacing: 5
 
@@ -39,13 +39,9 @@ Column {
         id: hidmetListViewId
         model: hidmetRssFeedId
         clip: false
-        //anchors.fill: fullrepresentationId
         anchors {
             top: fullrepresentationId.top
-//            horizontalCenter: parent.horizontalCenter
         }
-
-//        anchors.centerIn: parent
 
         delegate: Item {
             id: itemId
@@ -78,18 +74,17 @@ Column {
                 GridLayout {
                     columns: 2
                     visible: rootId.isExpanded
+                    Layout.alignment: Qt.AlignHCenter
 
                     PlasmaComponents.Label {
                         text: qsTr("Притисак: ")
                         font.weight: Font.Bold
-                        //font.pointSize: 8
                         Layout.row: 0; Layout.column: 0
                         Layout.alignment: Qt.AlignRight
                     }
 
                     PlasmaComponents.Label {
                         text: preassure
-                        //font.pointSize: 8
                         Layout.row: 0
                         Layout.column: 1
                         Layout.alignment: Qt.AlignLeft
@@ -98,14 +93,12 @@ Column {
                     PlasmaComponents.Label {
                         text: qsTr("Брзина ветра: ")
                         font.weight: Font.Bold
-                        //font.pointSize: 8
                         Layout.row: 1; Layout.column: 0
                         Layout.alignment: Qt.AlignRight
                     }
 
                     PlasmaComponents.Label {
                         text: wind_speed
-                        //font.pointSize: 8
                         Layout.row: 1; Layout.column: 1
                         Layout.alignment: Qt.AlignLeft
                     }
@@ -113,7 +106,6 @@ Column {
                     PlasmaComponents.Label {
                         text: qsTr("Смер ветра: ");
                         font.weight: Font.Bold;
-                        //font.pointSize: 8
                         Layout.row: 2; Layout.column: 0;
                         Layout.alignment: Qt.AlignRight
                     }
@@ -126,18 +118,6 @@ Column {
                         Layout.alignment: Qt.AlignLeft
                     }
                 }
-            }
-
-//            Rectangle {
-//                anchors.fill: parent
-//                color: "violet"
-//                visible: true
-//                opacity: .5
-//            }
-
-            MouseArea {
-                anchors.fill: parent
-                onClicked: console.log("clicked")
             }
         }
     }
@@ -158,7 +138,6 @@ Column {
         anchors {
             bottom: parent.bottom
             right: parent.right
-            left: parent.left
         }
 
         onLinkActivated: Qt.openUrlExternally(link)

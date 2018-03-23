@@ -47,6 +47,12 @@ ColumnLayout {
         Layout.fillHeight: compactrepresentationId.width > compactrepresentationId.height
         Layout.minimumWidth: item.Layout.minimumWidth
         Layout.minimumHeight: item.Layout.minimumHeight
+
+        MouseArea {
+            anchors.fill: parent
+
+            onClicked: plasmoid.expanded = !plasmoid.expanded;
+        }
     }
 
     Component {
