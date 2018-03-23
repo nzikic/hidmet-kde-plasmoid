@@ -23,7 +23,6 @@ import QtQuick.Layouts 1.3
 import QtQuick.XmlListModel 2.0
 
 import org.kde.plasma.components 2.0 as PlasmaComponents
-import org.kde.plasma.private.weather 1.0
 
 Column {
     id: fullrepresentationId
