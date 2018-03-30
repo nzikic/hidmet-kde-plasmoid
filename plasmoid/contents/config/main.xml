@@ -14,5 +14,9 @@
       <default>0</default>
     </entry>
 
+    <entry name="compactLayout" type="int">
+      <default>0</default>
+    </entry>
+
   </group>
 </kcfg>

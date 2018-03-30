@@ -57,7 +57,8 @@ Item {
     property string queryStation                    : Utils.station_enum_to_string(plasmoid.configuration.station)
     property int    refresh_interval_in_minutes     : plasmoid.configuration.reloadIntervalMinutes
     property int    refresh_interval_in_milliseconds: 1000 * 60 * refresh_interval_in_minutes
-    property bool   isExpanded: true
+
+    property bool   vertical: (plasmoid.formFactor == PlasmaCore.Types.Vertical)
 
     onQueryStationChanged: {
         console.log("------> station query changed "+ queryStation +" | reloading rss feed,and resetting timer...")
@@ -101,8 +102,6 @@ Item {
 
         source: "http://www.hidmet.gov.rs/ciril/osmotreni/index.rss"
 
-        //query: "/rss/channel/item[title[text()='Станица: Београд']]"
-        //query: "/rss/channel/item[title[substring-after(text(), ': ') = 'Београд']]"
         query: "/rss/channel/item[title[substring-after(text(), ': ') = '" + queryStation + "']]"
 
         XmlRole { name: "title";        query: "title/string()" }

@@ -28,6 +28,8 @@ import org.kde.plasma.components 2.0 as PlasmaComponents
 ColumnLayout {
     id: compactrepresentationId
 
+    property int parentHeight: height
+
     function createSubText(description, temperature) {
         var hasDesc = description !== undefined
         var hasTemp = temperature !== undefined
@@ -41,18 +43,19 @@ ColumnLayout {
     }
 
     Loader {
-        sourceComponent: iconCmpId
+        id: loader
+        sourceComponent: plasmoid.configuration.compactLayout == 0 ? iconCmpId : temperatureCmpId
 
-        Layout.fillWidth: compactrepresentationId.height > compactrepresentationId.width
-        Layout.fillHeight: compactrepresentationId.width > compactrepresentationId.height
+        Layout.fillWidth: vertical
+        Layout.fillHeight: !vertical
         Layout.minimumWidth: item.Layout.minimumWidth
         Layout.minimumHeight: item.Layout.minimumHeight
+    }
 
-        MouseArea {
-            anchors.fill: parent
+    MouseArea {
+        anchors.fill: parent
 
-            onClicked: plasmoid.expanded = !plasmoid.expanded;
-        }
+        onClicked: plasmoid.expanded = !plasmoid.expanded;
     }
 
     Component {
@@ -60,14 +63,29 @@ ColumnLayout {
 
         PlasmaCore.IconItem {
             id: icon_item_id
-            property int minimalIconSize: Math.max(Math.min(compactrepresentationId.width, compactrepresentationId.height),
+            property int minimalIconSize: Math.max((vertical ? compactrepresentationId.width : compactrepresentationId.height),
                                                    units.iconSizes.small)
             source: Qt.resolvedUrl(rootId.weather_img_png)
 
             implicitWidth: units.iconSizes.small
             implicitHeight: units.iconSizes.small
-            Layout.minimumWidth: minimalIconSize
-            Layout.minimumHeight: minimalIconSize
+            Layout.minimumWidth: vertical ? units.iconSizes.small : minimalIconSize
+            Layout.minimumHeight: vertical ? minimalIconSize : units.iconSizes.small
+        }
+    }
+
+    Component {
+        id: temperatureCmpId
+
+        PlasmaComponents.Label {
+            id: temperatureText
+
+            horizontalAlignment: Text.AlignHCenter
+            verticalAlignment: Text.AlignVCenter
+
+            text: rootId.temperature
+            font.pixelSize: parentHeight * .7
+            font.pointSize: -1
         }
     }
 

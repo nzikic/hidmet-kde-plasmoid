@@ -72,7 +72,6 @@ Column {
                 // Details
                 GridLayout {
                     columns: 2
-                    visible: rootId.isExpanded
                     Layout.alignment: Qt.AlignHCenter
 
                     PlasmaComponents.Label {

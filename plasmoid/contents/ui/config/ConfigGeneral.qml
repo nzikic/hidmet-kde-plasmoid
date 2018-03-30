@@ -23,8 +23,26 @@ import QtQuick.Layouts 1.1
 
 Item {
 
-    property alias cfg_station: stationComboBoxId.currentIndex
-    property alias cfg_reloadIntervalMinutes: reloadIntervalMinutes.value
+    property alias  cfg_station: stationComboBoxId.currentIndex
+    property alias  cfg_reloadIntervalMinutes: reloadIntervalMinutes.value
+    property int    cfg_compactLayout
+
+    ExclusiveGroup {
+        id: compactLayoutExGrp
+    }
+
+    onCfg_compactLayoutChanged: {
+        switch (cfg_compactLayout) {
+            case 0:
+                compactLayoutExGrp.current = compactLayoutIcon
+                break;
+            case 1:
+                compactLayoutExGrp.current = compactLayoutTemperature
+                break;
+            default:
+                break;
+        }
+    }
 
     GridLayout {
         anchors.left: parent.left
@@ -82,5 +100,34 @@ Item {
             maximumValue: 120
             suffix: i18n(' минута')
         }
+
+        Label {
+            text: i18n("Компактан приказ:")
+            Layout.alignment: Qt.AlignVCenter | Qt.AlignRight
+        }
+
+        RadioButton {
+            id: compactLayoutIcon
+            text: i18n("Иконица")
+            exclusiveGroup: compactLayoutExGrp
+            onCheckedChanged: if (checked) cfg_compactLayout = 0
+        }
+
+        Item {
+            // just to fill empty cell
+            width: 2
+            height: 2
+        }
+
+        RadioButton {
+            id: compactLayoutTemperature
+            text: i18n("Температура")
+            exclusiveGroup: compactLayoutExGrp
+            onCheckedChanged: if (checked) cfg_compactLayout = 1
+        }
+    }
+
+    Component.onCompleted: {
+        cfg_compactLayoutChanged()
     }
 }
