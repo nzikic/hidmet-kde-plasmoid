@@ -4,6 +4,14 @@ KDE Plasma5 weather plasmoid for hidmet.gov.rs
 
 *Plasmoid is still in development phase.*
 
+Plasmoid shows the current temperature  weather conditions for various places in Serbia. <br>
+The data is taken from RSS feed of [Republic Hidrometeorological Service of Serbia](http://www.hidmet.gov.rs/ "Републички Хидрометеоролошки завод"). <br>
+Weather forecast is currently not implemented, because RSS feed only gives current data.
+
+Плазмоид показује тренутну температуру и временске услове за различита места у Србији. <br>
+Подаци се узимају са RSS feed-а [Републичког хидрометеоролошког завода](http://www.hidmet.gov.rs/ "Републички Хидрометеоролошки завод").<br>
+Временска прогноза тренутно није имплементирана, јер RSS feed даје само актуелне податке.
+
 ## Installation instructions
 
 ### Install
