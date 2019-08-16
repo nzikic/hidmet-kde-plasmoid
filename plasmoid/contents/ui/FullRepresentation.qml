@@ -119,15 +119,6 @@ Column {
                 }
             }
         }
-
-        onCountChanged: {
-            if (count == 0) {
-                fullrepresentationId.labDataUnavailable.visible = false
-            }
-            else {
-                fullrepresentationId.labDataUnavailable.visible = true
-            }
-        }
     }
 
     PlasmaComponents.Label {
@@ -136,6 +127,7 @@ Column {
         horizontalAlignment: Text.AlignHCenter
         verticalAlignment: Text.AlignVCenter
         anchors.fill: parent
+        visible: hidmetListViewId.count > 0 ? false : true
     }
 
     PlasmaComponents.Label {
