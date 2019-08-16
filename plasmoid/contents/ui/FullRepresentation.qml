@@ -22,6 +22,7 @@ import QtQuick.Controls 2.2
 import QtQuick.Layouts 1.3
 import QtQuick.XmlListModel 2.0
 
+import org.kde.plasma.core 2.0 as PlasmaCore
 import org.kde.plasma.components 2.0 as PlasmaComponents
 
 Column {
@@ -62,7 +63,7 @@ Column {
                     Layout.minimumWidth: parent.width
                     Layout.preferredWidth: parent.width
 
-                    Image { source: weather_img_png; Layout.alignment: Qt.AlignRight }
+                    PlasmaCore.IconItem { source: weather_img_png; Layout.alignment: Qt.AlignRight }
                     PlasmaComponents.Label { text: temperature; font { pointSize: 22 } Layout.alignment: Qt.AlignLeft }
                 }
 
@@ -118,6 +119,23 @@ Column {
                 }
             }
         }
+
+        onCountChanged: {
+            if (count == 0) {
+                fullrepresentationId.labDataUnavailable.visible = false
+            }
+            else {
+                fullrepresentationId.labDataUnavailable.visible = true
+            }
+        }
+    }
+
+    PlasmaComponents.Label {
+        id: labDataUnavailable;
+        text: "Подаци нису доступни"
+        horizontalAlignment: Text.AlignHCenter
+        verticalAlignment: Text.AlignVCenter
+        anchors.fill: parent
     }
 
     PlasmaComponents.Label {

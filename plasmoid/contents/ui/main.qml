@@ -41,9 +41,8 @@ Item {
     property string weather_desc
     property string code            : "0"
     // icons downloaded from - http://www.hidmet.gov.rs/repository/ikonice/osmotreni/
-    property string weather_img_png : "../icons/" + code + ".png"
-    property string weather_img_gif : "../icons/" + code + ".gif"
-
+    property string weather_img_png : code === "0" ? "weather-none-available" : Qt.resolvedUrl("../icons/" + code + ".png")
+    property string weather_img_gif : code === "0" ? "weather-none-available" : Qt.resolvedUrl("../icons/" + code + ".gif")
     // keys
     property string key_temperature : "Температура"
     property string key_pressure    : "Притисак"
@@ -63,6 +62,16 @@ Item {
     onQueryStationChanged: {
         console.log("------> station query changed "+ queryStation +" | reloading rss feed,and resetting timer...")
         reloadTimerId.restart()
+    }
+
+    function data_unavailable() {
+        temperature      = ""
+        preassure        = ""
+        wind_direction   = ""
+        wind_speed       = ""
+        weather_desc     = "Подаци нису доступни"
+        code             = "0"
+
     }
 
     function parse_description(description) {
@@ -109,7 +118,7 @@ Item {
 
         onStatusChanged: {
             var pre = "XmlListModel."
-            if (status === XmlListModel.Ready)   {
+            if (status === XmlListModel.Ready) {
                 if (!reloadTimerId.running) {
                     reloadTimerId.start()
                 }
@@ -118,9 +127,9 @@ Item {
                 station = get(0).title.split(': ')[1] // get just station name
                 print(pre +"Ready -count:", count)
             }
-            if (status === XmlListModel.Loading) print(pre+"Loading...");
-            if (status === XmlListModel.Error)   print(pre+"Error: ", errorString() );
-            if (status === XmlListModel.Null)    prin (pre+"Null");
+            if (status === XmlListModel.Loading) { print(pre+"Loading..."); }
+            if (status === XmlListModel.Error)   { data_unavailable(); print(pre+"Error: ", errorString() ); }
+            if (status === XmlListModel.Null)    { data_unavailable(); print(pre+"Null"); }
         }
     }
 

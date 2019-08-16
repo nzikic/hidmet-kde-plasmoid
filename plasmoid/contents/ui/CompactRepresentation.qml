@@ -24,7 +24,6 @@ import org.kde.plasma.core 2.0 as PlasmaCore
 import org.kde.plasma.plasmoid 2.0
 import org.kde.plasma.components 2.0 as PlasmaComponents
 
-
 ColumnLayout {
     id: compactrepresentationId
 
@@ -65,7 +64,7 @@ ColumnLayout {
             id: icon_item_id
             property int minimalIconSize: Math.max((vertical ? compactrepresentationId.width : compactrepresentationId.height),
                                                    units.iconSizes.small)
-            source: Qt.resolvedUrl(rootId.weather_img_png)
+            source: weather_img_png
 
             implicitWidth: units.iconSizes.small
             implicitHeight: units.iconSizes.small
@@ -89,7 +88,7 @@ ColumnLayout {
         }
     }
 
-    Plasmoid.icon           : Qt.resolvedUrl(rootId.weather_img_png)
+    Plasmoid.icon           : weather_img_png
     Plasmoid.toolTipMainText: rootId.queryStation
     Plasmoid.toolTipSubText : createSubText(rootId.weather_desc, rootId.temperature)
 }
