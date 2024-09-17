@@ -43,3 +43,6 @@ CMakeLists.txt.user*
 
 # Dolphin
 .directory
+
+/.qmlls.ini
+/build/
