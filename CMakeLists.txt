@@ -1,5 +1,4 @@
-# Set minimum CMake version (required for CMake 3.0 or later)
-cmake_minimum_required(VERSION 2.8.12)
+cmake_minimum_required(VERSION 3.20.0)
 
 project(hidmet-kde-plasmoid)
 
@@ -7,11 +6,13 @@ project(hidmet-kde-plasmoid)
 # See http://api.kde.org/ecm/manual/ecm.7.html
 # and http://api.kde.org/ecm/manual/ecm-kde-modules.7.html
 find_package(ECM REQUIRED NO_MODULE)
-# Needed by find_package(KF5Plasma) below.
 set(CMAKE_MODULE_PATH ${ECM_MODULE_PATH} ${ECM_KDE_MODULE_DIR} ${CMAKE_MODULE_PATH})
 
-# Locate plasma_install_package macro.
-find_package(KF5Plasma REQUIRED)
+find_package(Plasma REQUIRED)
 
-# Add installatation target ("make install").
-plasma_install_package(plasmoid org.kde.hidmet)
+find_package(Qt6 CONFIG REQUIRED
+    Quick
+    Qml
+)
+
+plasma_install_package(package com.github.nzikic.hidmet-kde-plasmoid)
