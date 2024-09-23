@@ -1,0 +1,20 @@
+{
+    "KPlugin": {
+        "Authors": [
+            {
+                "Email": "nenad.zikic@gmail.com",
+                "Name": "Nenad Žikić"
+            }
+        ],
+        "Category": "Environment and Weather",
+        "Description": "Hidrometeoroloski zavod, aktuelni meteoroloski podaci (www.hidmet.gov.rs)",
+        "Icon": "weather-clouds",
+        "Id": "com.github.nzikic.hidmet-kde-plasmoid",
+        "Name": "Hidmet aktuelni podaci",
+        "Version": "1.1",
+        "Website": "https://github.com/nzikic/hidmet-kde-plasmoid"
+    },
+    "X-Plasma-API": "declarativeappletscript",
+    "X-Plasma-API-Minimum-Version": "6.0",
+    "KPackageStructure": "Plasma/Applet"
+}
