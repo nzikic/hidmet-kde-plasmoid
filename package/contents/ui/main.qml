@@ -23,6 +23,9 @@ import QtQuick
 import org.kde.plasma.plasmoid
 import org.kde.kirigami as Kirigami
 
+import "../tools/hidmetUtils.js" as Hidmet
+
+
 PlasmoidItem {
     id: root
 
@@ -62,10 +65,13 @@ PlasmoidItem {
     }
 
     fullRepresentation: FullRepresentation { stationData: hidmetStationModel.stationData }
-    compactRepresentation: CompactRepresentation {}
+    compactRepresentation: CompactRepresentation { stationData: hidmetStationModel.stationData }
 
-//    preferredRepresentation: compactRepresentation
-    preferredRepresentation: fullRepresentation
+    preferredRepresentation: compactRepresentation
+
+    Plasmoid.icon: Hidmet.getIconUrl(hidmetStationModel.stationData?.descriptionCode)
+    toolTipMainText: Hidmet.stations[hidmetStationModel.stationData?.id]
+    toolTipSubText: `${hidmetStationModel.stationData?.temperature} - ${hidmetStationModel.stationData?.description}`
 
     Component.onCompleted: hidmetAtomFeed.onStatusChanged.connect(hidmetStationModel.update);
 }

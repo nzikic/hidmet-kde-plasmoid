@@ -103,3 +103,7 @@ function parseStationSummary(summary) {
 
     return reduced;
 };
+
+function getIconUrl(code) {
+    return `https://www.hidmet.gov.rs/repository/ikonice/osmotreni/${code ? code : "0"}.png`;
+}

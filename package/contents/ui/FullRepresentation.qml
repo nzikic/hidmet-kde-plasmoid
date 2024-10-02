@@ -26,7 +26,7 @@ import org.kde.plasma.components as PlasmaComponents
 import "../tools/hidmetUtils.js" as Hidmet
 
 Item {
-    id: root
+    id: rootFull
 
     required property var stationData
 
@@ -43,7 +43,7 @@ Item {
         anchors.fill: parent
 
         PlasmaComponents.Label {
-            text: Hidmet.stations[root.stationData?.id]
+            text: Hidmet.stations[rootFull.stationData?.id]
             font { pointSize: 14; bold: true }
             Layout.alignment: Qt.AlignHCenter
         }
@@ -57,13 +57,13 @@ Item {
             Item { Layout.fillWidth: true }
 
             Image {
-                source: `https://www.hidmet.gov.rs/repository/ikonice/osmotreni/${(root.stationData?.descriptionCode) ?? "0"}.png`
+                source: Hidmet.getIconUrl(rootFull.stationData?.descriptionCode)
                 Layout.alignment: Qt.AlignRight
             }
 
             PlasmaComponents.Label {
                 id: lblTemerature
-                text: root.stationData?.temperature
+                text: rootFull.stationData?.temperature
                 font.pointSize: 22
                 Layout.alignment: Qt.AlignLeft
             }
@@ -72,7 +72,7 @@ Item {
         }
 
         PlasmaComponents.Label {
-            text: root.stationData?.description
+            text: rootFull.stationData?.description
             Layout.alignment: Qt.AlignHCenter
         }
 
@@ -80,19 +80,19 @@ Item {
             Layout.alignment: Qt.AlignHCenter
 
             PlasmaComponents.Label {
-                text: root.stationData?.humidity
+                text: rootFull.stationData?.humidity
                 Layout.alignment: Qt.AlignHCenter
                 Kirigami.FormData.label: i18n("Влажност:")
             }
 
             PlasmaComponents.Label {
-                text: root.stationData?.windSpeed
+                text: rootFull.stationData?.windSpeed
                 Layout.alignment: Qt.AlignHCenter
                 Kirigami.FormData.label: i18n("Брзина ветра:")
             }
 
             PlasmaComponents.Label {
-                text: root.stationData?.preassure
+                text: rootFull.stationData?.preassure
                 Layout.alignment: Qt.AlignHCenter
                 Kirigami.FormData.label: i18n("Притисак:")
             }
