@@ -19,9 +19,104 @@
 
 import QtQml
 import QtQuick
+import QtQuick.Layouts
 
+import org.kde.kirigami as Kirigami
 import org.kde.plasma.components as PlasmaComponents
+import org.kde.plasma.core as PlasmaCore
+import org.kde.plasma.plasmoid
 
-PlasmaComponents.Label {
-    text: "20'C"
+import "../tools/hidmetUtils.js" as Hidmet
+
+
+Loader {
+    id: rootCompact
+
+    required property var stationData
+
+    readonly property bool vertical: root.plasmoid.formFactor == PlasmaCore.Types.Vertical
+
+    property int iconSize: vertical ? rootCompact.width : rootCompact.height
+    property int minimalIconSize: Math.max(iconSize, Kirigami.Units.iconSizes.small)
+
+    Layout.fillWidth: vertical
+    Layout.fillHeight: !vertical
+    Layout.minimumWidth: item.Layout.minimumWidth
+    Layout.minimumHeight: item.Layout.minimumHeight
+
+    activeFocusOnTab: true
+
+    sourceComponent: componentImageAndTemperature
+
+    MouseArea {
+        anchors.fill: parent
+        onClicked: root.plasmoid.expanded = !plasmoid.expanded
+    }
+
+    Component {
+        id: componentTemperature
+
+        PlasmaComponents.Label {
+            text: rootCompact.stationData?.temperature ?? "..."
+
+            minimumPixelSize: Kirigami.Units.iconSizes.sizeForLabels
+            font.pixelSize: 1024
+            fontSizeMode: Text.Fit
+
+            horizontalAlignment: Text.AlignHCenter
+            verticalAlignment: Text.AlignVCenter
+        }
+    }
+
+    Component {
+        id: componentImage
+
+        Image {
+            source: Hidmet.getIconUrl(rootCompact.stationData?.descriptionCode)
+            fillMode: Image.PreserveAspectFit
+            Layout.alignment: Qt.AlignRight
+        }
+    }
+
+    Component {
+        id: componentImageAndTemperature
+
+        Item {
+            Layout.alignment: Qt.AlignHCenter | Qt.AlignHCenter
+
+            RowLayout {
+                spacing: 1
+                anchors.fill: parent
+
+                Image {
+                    source: Hidmet.getIconUrl(rootCompact.stationData?.descriptionCode)
+                    fillMode: Image.PreserveAspectFit
+
+                    Layout.minimumWidth: Kirigami.Units.iconSizes.sizeForLabels
+                    Layout.minimumHeight: Kirigami.Units.iconSizes.sizeForLabels
+
+                    Layout.preferredWidth: parent.width
+                    Layout.preferredHeight: parent.height
+
+                    Layout.fillWidth: true
+                    Layout.fillHeight: true
+                }
+
+                PlasmaComponents.Label {
+                    id: lbl
+                    text: rootCompact.stationData?.temperature ?? "..."
+
+                    minimumPixelSize: Kirigami.Units.iconSizes.sizeForLabels
+                    font.pixelSize: 1024
+                    fontSizeMode: Text.Fit
+
+                    horizontalAlignment: Text.AlignHCenter
+                    verticalAlignment: Text.AlignVCenter
+
+                    Layout.fillWidth: true
+                    Layout.fillHeight: true
+                }
+            }
+        }
+    }
 }
