@@ -69,7 +69,7 @@ PlasmoidItem {
 
     preferredRepresentation: compactRepresentation
 
-    Plasmoid.icon: Hidmet.getIconUrl(hidmetStationModel.stationData?.descriptionCode)
+    Plasmoid.icon: "weather-clouds"
     toolTipMainText: Hidmet.stations[hidmetStationModel.stationData?.id]
     toolTipSubText: `${hidmetStationModel.stationData?.temperature} - ${hidmetStationModel.stationData?.description}`
 
