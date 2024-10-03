@@ -9,5 +9,8 @@
         <entry name="reloadIntervalMinutes" type="int">
             <default>15</default>
         </entry>
+        <entry name="compactViewMode" type="int">
+            <default>0</default>
+        </entry>
     </group>
 </kcfg>

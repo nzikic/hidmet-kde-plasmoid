@@ -41,12 +41,21 @@ Loader {
 
     Layout.fillWidth: vertical
     Layout.fillHeight: !vertical
-    Layout.minimumWidth: item.Layout.minimumWidth
-    Layout.minimumHeight: item.Layout.minimumHeight
+    Layout.minimumWidth: root.Layout.minimumWidth ?? 0
+    Layout.minimumHeight: root.Layout.minimumHeight ?? 0
 
     activeFocusOnTab: true
 
-    sourceComponent: componentImageAndTemperature
+    sourceComponent: {
+        switch (plasmoid.configuration.compactViewMode) {
+            case Hidmet.CompactView.Icon:
+                return componentIcon;
+            case Hidmet.CompactView.Temperature:
+                return componentTemperature;
+            case Hidmet.CompactView.IconAndTemperature:
+                return componentIconAndTemperature;
+        }
+    }
 
     MouseArea {
         anchors.fill: parent
@@ -69,7 +78,7 @@ Loader {
     }
 
     Component {
-        id: componentImage
+        id: componentIcon
 
         Image {
             source: Hidmet.getIconUrl(rootCompact.stationData?.descriptionCode)
@@ -79,7 +88,7 @@ Loader {
     }
 
     Component {
-        id: componentImageAndTemperature
+        id: componentIconAndTemperature
 
         Item {
             Layout.alignment: Qt.AlignHCenter | Qt.AlignHCenter
