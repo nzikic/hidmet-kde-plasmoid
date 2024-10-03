@@ -29,8 +29,14 @@ import '../../tools/hidmetUtils.js' as Hidmet
 KCM.SimpleKCM {
     property alias cfg_stationId: cbStation.currentValue
     property alias cfg_reloadIntervalMinutes: sbReloadInterval.value
+    property alias cfg_compactViewMode: cbCompactView.currentIndex
 
     Kirigami.FormLayout {
+
+        Item {
+            Kirigami.FormData.isSection: true
+        }
+
         QQC2.ComboBox {
             id: cbStation
 
@@ -53,6 +59,18 @@ KCM.SimpleKCM {
             stepSize: 5
 
             Kirigami.FormData.label: i18n("Интервал освежавања:")
+        }
+
+        Item {
+            Kirigami.FormData.isSection: true
+        }
+
+        QQC2.ComboBox {
+            id: cbCompactView
+
+            model: Hidmet.configCompactViewModel
+
+            Kirigami.FormData.label: i18n("Приказ иконице:")
         }
     }
 }

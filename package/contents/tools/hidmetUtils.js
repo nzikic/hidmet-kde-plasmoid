@@ -107,3 +107,18 @@ function parseStationSummary(summary) {
 function getIconUrl(code) {
     return `https://www.hidmet.gov.rs/repository/ikonice/osmotreni/${code ? code : "0"}.png`;
 }
+
+// CompactView and ConfigCompactViewModel should be ordered the same
+// This is enum to be used in code
+const CompactView = {
+    "Icon": 0,
+    "Temperature": 1,
+    "IconAndTemperature": 2
+}
+
+// and this is the model for combo box and order of keys should match the ones above
+const configCompactViewModel = [
+    "Иконица",
+    "Температура",
+    "Иконица и температура"
+]
