@@ -67,8 +67,6 @@ PlasmoidItem {
     fullRepresentation: FullRepresentation { stationData: hidmetStationModel.stationData }
     compactRepresentation: CompactRepresentation { stationData: hidmetStationModel.stationData }
 
-    preferredRepresentation: compactRepresentation
-
     Plasmoid.icon: "weather-clouds"
     toolTipMainText: Hidmet.stations[hidmetStationModel.stationData?.id]
     toolTipSubText: `${hidmetStationModel.stationData?.temperature} - ${hidmetStationModel.stationData?.description}`
