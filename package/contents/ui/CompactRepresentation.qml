@@ -59,7 +59,7 @@ Loader {
 
     MouseArea {
         anchors.fill: parent
-        onClicked: root.plasmoid.expanded = !plasmoid.expanded
+        onClicked: root.expanded = !root.expanded
     }
 
     Component {
