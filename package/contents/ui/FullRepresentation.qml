@@ -96,9 +96,9 @@ Item {
                 Layout.alignment: Qt.AlignHCenter
                 Kirigami.FormData.label: i18n("Притисак:")
             }
-
-            Item { Kirigami.FormData.isSection: true }
         }
+
+        Item { Layout.fillHeight: true }
 
         PlasmaComponents.Label {
             text: '<a href="https://hidmet.gov.rs/">hidmet.gov.rs</a>'

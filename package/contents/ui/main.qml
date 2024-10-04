@@ -30,7 +30,7 @@ PlasmoidItem {
     id: root
 
     width: Kirigami.Units.gridUnit * 11
-    height: Kirigami.Units.gridUnit * 15
+    height: Kirigami.Units.gridUnit * 12
 
     property int stationId: plasmoid.configuration.stationId
 
