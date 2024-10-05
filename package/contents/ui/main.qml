@@ -20,17 +20,14 @@
 import QtQml
 import QtQuick
 
+import org.kde.plasma.core as PlasmaCore
 import org.kde.plasma.plasmoid
-import org.kde.kirigami as Kirigami
 
 import "../tools/hidmetUtils.js" as Hidmet
 
 
 PlasmoidItem {
     id: root
-
-    width: Kirigami.Units.gridUnit * 11
-    height: Kirigami.Units.gridUnit * 12
 
     property int stationId: plasmoid.configuration.stationId
 
@@ -70,6 +67,13 @@ PlasmoidItem {
     Plasmoid.icon: "weather-clouds"
     toolTipMainText: Hidmet.stations[hidmetStationModel.stationData?.id]
     toolTipSubText: `${hidmetStationModel.stationData?.temperature} - ${hidmetStationModel.stationData?.description}`
+
+    Binding {
+        target: Plasmoid
+        property: "needsToBeSquare"
+        value: (Plasmoid.containmentType & PlasmaCore.Types.CustomEmbeddedContainment) |
+               (Plasmoid.containmentDisplayHints & PlasmaCore.Types.ContainmentForcesSquarePlasmoids)
+    }
 
     Component.onCompleted: hidmetAtomFeed.onStatusChanged.connect(hidmetStationModel.update);
 }
