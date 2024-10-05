@@ -39,11 +39,6 @@ Loader {
     property int iconSize: vertical ? rootCompact.width : rootCompact.height
     property int minimalIconSize: Math.max(iconSize, Kirigami.Units.iconSizes.small)
 
-    Layout.fillWidth: vertical
-    Layout.fillHeight: !vertical
-    Layout.minimumWidth: root.Layout.minimumWidth ?? 0
-    Layout.minimumHeight: root.Layout.minimumHeight ?? 0
-
     activeFocusOnTab: true
 
     sourceComponent: {
@@ -56,6 +51,11 @@ Loader {
                 return componentIconAndTemperature;
         }
     }
+
+    Layout.fillWidth: vertical
+    Layout.fillHeight: !vertical
+    Layout.minimumWidth: item.Layout.minimumWidth
+    Layout.minimumHeight: item.Layout.minimumHeight
 
     MouseArea {
         anchors.fill: parent
@@ -90,42 +90,10 @@ Loader {
     Component {
         id: componentIconAndTemperature
 
-        Item {
-            Layout.alignment: Qt.AlignHCenter | Qt.AlignHCenter
-
-            RowLayout {
-                spacing: 1
-                anchors.fill: parent
-
-                Image {
-                    source: Hidmet.getIconUrl(rootCompact.stationData?.descriptionCode)
-                    fillMode: Image.PreserveAspectFit
-
-                    Layout.minimumWidth: Kirigami.Units.iconSizes.sizeForLabels
-                    Layout.minimumHeight: Kirigami.Units.iconSizes.sizeForLabels
-
-                    Layout.preferredWidth: parent.width
-                    Layout.preferredHeight: parent.height
-
-                    Layout.fillWidth: true
-                    Layout.fillHeight: true
-                }
-
-                PlasmaComponents.Label {
-                    id: lbl
-                    text: rootCompact.stationData?.temperature ?? "..."
-
-                    minimumPixelSize: Kirigami.Units.iconSizes.sizeForLabels
-                    font.pixelSize: 1024
-                    fontSizeMode: Text.Fit
-
-                    horizontalAlignment: Text.AlignHCenter
-                    verticalAlignment: Text.AlignVCenter
-
-                    Layout.fillWidth: true
-                    Layout.fillHeight: true
-                }
-            }
+        CompactIconAndTemperature {
+            vertical: rootCompact.vertical
+            imageSource: Hidmet.getIconUrl(rootCompact.stationData?.descriptionCode)
+            text: rootCompact.stationData?.temperature ?? "..."
         }
     }
 }
