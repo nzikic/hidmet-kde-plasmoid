@@ -25,85 +25,76 @@ import org.kde.plasma.components as PlasmaComponents
 
 import "../tools/hidmetUtils.js" as Hidmet
 
-Item {
+
+ColumnLayout {
     id: rootFull
 
     required property var stationData
 
-    width: layoutColumn.implicitWidth
-    height: layoutColumn.implicitHeight
+    spacing: 5
 
-    ColumnLayout {
-        id: layoutColumn
-        spacing: 5
+    Layout.preferredWidth: Math.max(Kirigami.Units.gridUnit * 9, implicitWidth)
+    Layout.preferredHeight: Math.max(Kirigami.Units.gridUnit * 11, implicitHeight)
 
-        width: implicitWidth
-        height: implicitHeight
+    PlasmaComponents.Label {
+        text: Hidmet.stations[rootFull.stationData?.id]
+        font { pointSize: 14; bold: true }
+        Layout.alignment: Qt.AlignHCenter
+    }
 
-        anchors.fill: parent
+    RowLayout {
+        spacing: 0
 
-        PlasmaComponents.Label {
-            text: Hidmet.stations[rootFull.stationData?.id]
-            font { pointSize: 14; bold: true }
-            Layout.alignment: Qt.AlignHCenter
-        }
+        Layout.alignment: Qt.AlignHCenter
 
-        RowLayout {
-            spacing: 0
-
-            Layout.fillWidth: true
-            Layout.alignment: Qt.AlignHCenter
-
-            Item { Layout.fillWidth: true }
-
-            Image {
-                source: Hidmet.getIconUrl(rootFull.stationData?.descriptionCode)
-                Layout.alignment: Qt.AlignRight
-            }
-
-            PlasmaComponents.Label {
-                id: lblTemerature
-                text: rootFull.stationData?.temperature
-                font.pointSize: 22
-                Layout.alignment: Qt.AlignLeft
-            }
-
-            Item { Layout.fillWidth: true }
+        Image {
+            source: Hidmet.getIconUrl(rootFull.stationData?.descriptionCode)
+            Layout.alignment: Qt.AlignRight
         }
 
         PlasmaComponents.Label {
-            text: rootFull.stationData?.description
-            Layout.alignment: Qt.AlignHCenter
+            id: lblTemerature
+            text: rootFull.stationData?.temperature
+            font.pointSize: 22
+            Layout.alignment: Qt.AlignLeft
         }
+    }
 
-        Kirigami.FormLayout {
-            Layout.alignment: Qt.AlignHCenter
+    PlasmaComponents.Label {
+        text: rootFull.stationData?.description
+        Layout.alignment: Qt.AlignHCenter
+    }
 
-            PlasmaComponents.Label {
-                text: rootFull.stationData?.humidity
-                Layout.alignment: Qt.AlignHCenter
-                Kirigami.FormData.label: i18n("Влажност:")
-            }
-
-            PlasmaComponents.Label {
-                text: rootFull.stationData?.windSpeed
-                Layout.alignment: Qt.AlignHCenter
-                Kirigami.FormData.label: i18n("Брзина ветра:")
-            }
-
-            PlasmaComponents.Label {
-                text: rootFull.stationData?.preassure
-                Layout.alignment: Qt.AlignHCenter
-                Kirigami.FormData.label: i18n("Притисак:")
-            }
-        }
-
-        Item { Layout.fillHeight: true }
+    Kirigami.FormLayout {
+        Layout.alignment: Qt.AlignHCenter
 
         PlasmaComponents.Label {
-            text: '<a href="https://hidmet.gov.rs/">hidmet.gov.rs</a>'
-            Layout.fillWidth: true
-            horizontalAlignment: Text.AlignRight
+            text: rootFull.stationData?.humidity
+            Layout.alignment: Qt.AlignHCenter
+            Kirigami.FormData.label: i18n("Влажност:")
         }
+
+        PlasmaComponents.Label {
+            text: rootFull.stationData?.windSpeed
+            Layout.alignment: Qt.AlignHCenter
+            Kirigami.FormData.label: i18n("Брзина ветра:")
+        }
+
+        PlasmaComponents.Label {
+            text: rootFull.stationData?.preassure
+            Layout.alignment: Qt.AlignHCenter
+            Kirigami.FormData.label: i18n("Притисак:")
+        }
+    }
+
+    PlasmaComponents.Label {
+        readonly property url hidmet_link: "https://hidmet.gov.rs/"
+
+        text: `<a href="${hidmet_link}">hidmet.gov.rs</a>`
+
+        horizontalAlignment: Text.AlignRight
+        Layout.alignment: Qt.AlignRight
+
+        onLinkActivated: Qt.openUrlExternally(hidmet_link);
     }
 }
