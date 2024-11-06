@@ -1,6 +1,6 @@
 # hidmet-kde-plasmoid
 
-KDE Plasma5 weather plasmoid for hidmet.gov.rs
+KDE Plasma6 weather plasmoid for hidmet.gov.rs
 
 *Plasmoid is still in development phase.*
 
@@ -17,27 +17,13 @@ Weather forecast is currently not implemented, because RSS feed only gives curre
 ### Install
 
 If you want to install plasmoid run following commands in the console:
-
 ```bash
 cd hidmet-kde-plasmoid/
-kpackagetool5 --type Plasma/Applet --install plasmoid/
-```
-Command above installs plasmoid to user's directory at `~/.local/share/plasma/plasmoids/` directory.
-To install it globally into `/usr/share/plasma/plasmoids/` add `--global` option.
-```bash
-kpackagetool5 --type Plasma/Applet --global --install plasmoid/
-```
+mkdir build && cd build/
+cmake ../
+make install
 
-### Upgrade
-
-If you already have this plasmoid installed, to upgrade use:
-
-```bash
-kpackagetool5 --type Plasma/Applet --upgrade plasmoid/
+systemctl restart --user plasma-plasmashell.service
 ```
 
-### Remove
-To **remove** it:
-```bash
-kpackagetool5 --type Plasma/Applet --remove plasmoid/
-```
+This installs plasmoid to user's plasmoids directory - `~/.local/share/plasma/plasmoids/`, and restarts Plasma shell so that plasmoid is available to add
